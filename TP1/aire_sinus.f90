@@ -13,6 +13,6 @@
   enddo
 
   
-  write(10,*)'aire = ', aire
+  write(*,*)'aire = ', aire
   stop
 end program sinus
