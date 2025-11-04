@@ -5,7 +5,7 @@ program pollution
   iter = 0
   x0 = 1.
 40 f0 = 6-20*(exp(-0.2*x0)-exp(-0.75*x0))
-  df0 = 4.*exp(-0.2*x0)- 15.*exp(0.75*x0)
+  df0 = 4.*exp(-0.2*x0)- 15.*exp(-0.75*x0)
   x1 = x0-f0/df0
   er = abs(x1-x0)
   if(er.gt.tol) then
