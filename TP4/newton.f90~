@@ -1,0 +1,16 @@
+program newton
+  iter = 0
+  tol = 1.e-5
+  x0 = 1
+30 f0 = x0**3-5
+  df0 = 3*x0**2
+  x1 = x0-f0/df0
+  er= abs(x1-x0)
+  if (er.gt.tol) then
+     x0 = x1
+     iter = iter + 1
+     write(*,*)'iteration :',iter, 'erruer :', er, 'valeur x1 :', x1
+     goto 30
+  endif
+  stop
+end program newton
