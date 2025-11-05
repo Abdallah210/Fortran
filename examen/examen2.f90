@@ -1,0 +1,86 @@
+program poutre
+  
+  parameter (n=11)
+  dimension a(n,n),b(n), u0(n), u1(n)
+
+  ! Initialisation :
+
+  do i=1,n
+     do j=1,n
+        a(i,j)=0
+     enddo
+  enddo
+
+  do i=1,n
+     b(i)=0
+  enddo
+
+  ! Remplissage :
+
+  do i=2, n-1
+     a(i,i)=2
+     a(i,i-1)=-1
+     a(i,i+1)=-1
+  enddo
+
+  a(1,1)=1
+  a(n,n)=1
+  
+  b(1)=-0.4
+  b(n)=0.4
+
+  ! Affichage de la matrice A et du vecteur b  :
+  write(*,*)'la matrice A :'
+  do i=1,n
+     write(*,*)(a(i,j),j=1,n)
+  enddo
+
+    write(*,*)'le vecteur b :'
+  do i=1,n
+     write(*,*)(b(i))
+  enddo
+  
+ ! Calcule des sommes :
+  tol = 1.e-4
+  iter = 0
+  
+  do i=1,n
+     u0(i)=0
+  enddo
+
+300 do i=1,n
+     som1=0
+     do j=1,i-1
+        som1= som1 + a(i,j)*u0(j)
+     enddo
+     som2=0
+     do j=i+1,n
+        som2=som2 + a(i,j)*u0(j)
+     enddo
+
+     u1(i)=(b(i)-som1-som2) / a(i,i)
+  enddo
+
+  er = 0.
+  do i=1,n
+     er = er + abs(u1(i)-u0(i))
+  enddo
+
+  if(er.gt.tol) then
+     do i=1,n
+        u0(i)=u1(i)
+     enddo
+     iter = iter + 1
+    write(*,*)'iteration : ',iter ,er
+     goto 300
+  endif
+
+  !Affichage du graphe :
+  h=4./(n-1)
+  do i=1,n
+     xi=(i-1)*h
+     write(*,*)xi,u1(i)
+     write(20,*)xi,u1(i)
+  enddo
+  stop
+end program poutre
